@@ -38,12 +38,22 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Allow all origins — frontend is on Vercel, backend on Railway
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+
+# Always include common Vercel URLs
+ALL_ORIGINS = list(set(ALLOWED_ORIGINS + [
+    "https://book-my-glam-ten.vercel.app",
+    "https://book-my-glam-sth6.vercel.app",
+    "http://localhost:5500",
+    "http://localhost:3000",
+    "http://127.0.0.1:5500",
+]))
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
