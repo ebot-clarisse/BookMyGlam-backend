@@ -116,7 +116,8 @@ async def get_my_profile(profile=Depends(get_current_profile)):
 async def update_my_profile(updates: dict, user=Depends(get_current_user)):
     """Update the authenticated user's profile. Only safe fields are allowed."""
     SAFE_FIELDS = {"name","phone","location","bio","avatar_url",
-                   "instagram","business_name","cancel_policy","email_notif","sms_notif"}
+                   "instagram","business_name","cancel_policy","email_notif","sms_notif",
+                   "experience","tags"}
     clean = {k: v for k, v in updates.items() if k in SAFE_FIELDS}
     if not clean:
         raise HTTPException(status_code=400, detail="No valid fields to update")
